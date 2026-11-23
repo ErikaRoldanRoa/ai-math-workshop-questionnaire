@@ -202,6 +202,17 @@
     color: var(--soft);
   }
 
+  .char-left {
+    font-size: 13px;
+    color: var(--soft);
+    margin-top: 4px;
+    text-align: right;
+  }
+
+  .char-left:empty {
+    display: none;
+  }
+
   .inline-check {
     display: flex;
     align-items: center;
@@ -686,7 +697,7 @@
 
       <div class="q-block">
         <label class="q-label" for="q-helped"><span class="q-num">10.</span> The last time AI really helped your research, what did it do?</label>
-        <input type="text" id="q-helped" name="last_helped" maxlength="220" required placeholder="One sentence (or 'none yet')">
+        <textarea id="q-helped" name="last_helped" rows="3" maxlength="220" required placeholder="One or two sentences (or 'none yet')"></textarea>
       </div>
 
       <div class="q-block">
@@ -791,6 +802,30 @@
   function checkedValues(form, groupName) {
     return Array.from(form.querySelectorAll('input[name="' + groupName + '"]:checked')).map(el => el.value);
   }
+
+  // Only the button sends the questionnaire: Enter in a one-line field (or on a choice) does not.
+  $('questionnaire-form').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+      e.preventDefault();
+    }
+  });
+
+  // A field that is nearly full says how many characters are left, so that a limit never silently stops the typing.
+  document.querySelectorAll('#questionnaire-form textarea[maxlength], #questionnaire-form input[maxlength]').forEach(el => {
+    const max = Number(el.getAttribute('maxlength'));
+    const note = document.createElement('div');
+    note.className = 'char-left';
+    note.setAttribute('aria-live', 'polite');
+    el.insertAdjacentElement('afterend', note);
+    const update = () => {
+      const left = max - el.value.length;
+      note.textContent = left <= Math.max(20, Math.round(max * 0.25))
+        ? (left > 0 ? left + (left === 1 ? ' character left' : ' characters left') : 'No characters left')
+        : '';
+    };
+    el.addEventListener('input', update);
+    update();
+  });
 
   $('questionnaire-form').addEventListener('input', () => {
     $('msg').style.display = 'none';

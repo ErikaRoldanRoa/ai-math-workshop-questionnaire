@@ -336,6 +336,72 @@ async function runOverlongCheck(browser) {
   console.log('PASS questionnaire [overlong answers stay within the intake caps]');
 }
 
+// Enter in a one-line field or on a choice never sends the form (a participant's answer left early that way on 23.11),
+// question 10 takes several lines, and a nearly full field says how many characters are left.
+async function runEnterAndLimitCheck(browserName, browser) {
+  const context = await browser.newContext({ viewport: { width: 800, height: 800 } });
+  await context.route('http://**', route => route.abort());
+  await context.route('https://**', route => route.abort());
+  await context.addInitScript(() => {
+    window.__sent = [];
+    window.fetch = async function stub(url, opts) {
+      window.__sent.push(opts.body);
+      return { json: async () => ({ status: 'ok', correction_id: 'c-test' }) };
+    };
+  });
+  const page = await context.newPage();
+  await page.goto(fileUrl, { waitUntil: 'load' });
+  // every required answer filled, so that an Enter that submitted the form would really send it
+  await page.fill('#q-name', 'Ada Test');
+  await page.fill('#q-email', 'ada.test@example.org');
+  await page.fill('#q-github', 'ada-test');
+  await page.check('input[name="gitlab"][value="no"]');
+  for (const n of ['ready_git', 'ready_latex', 'ready_claude_code', 'ready_anthropic_account']) {
+    await page.check(`input[name="${n}"][value="yes"]`);
+  }
+  await page.check('input[name="claude_plan"][value="Pro"]');
+  for (let i = 1; i <= 6; i++) await page.check(`input[name="freq_row_${i}"][value="weekly"]`);
+  await page.check('input[name="where_most"][value="chat window"]');
+  await page.fill('#q-wrong', 'not yet');
+  await page.fill('#q-helped', 'none yet');
+  await page.check('input[name="pull_requests"][value="used them"]');
+  const tag = `${browserName}: `;
+  for (const sel of ['#q-name', '#q-email', '#q-github', '#q-tool-other', '#q-concern-other', 'input[name="pull_requests"][value="used them"]']) {
+    await page.focus(sel);
+    await page.keyboard.press('Enter');
+  }
+  await page.waitForTimeout(400);
+  const afterEnter = await page.evaluate(() => ({
+    sent: window.__sent.length,
+    done: getComputedStyle(document.getElementById('done')).display !== 'none',
+  }));
+  assert.equal(afterEnter.sent, 0, tag + 'Enter in a one-line field or on a choice must not send the questionnaire');
+  assert.equal(afterEnter.done, false, tag + 'no confirmation after Enter');
+  assert.equal(await page.evaluate(() => document.getElementById('q-helped').tagName), 'TEXTAREA', tag + 'question 10 takes several lines');
+  await page.fill('#q-helped', '');
+  await page.focus('#q-helped');
+  await page.keyboard.type('first line');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('second line');
+  assert.ok((await page.inputValue('#q-helped')).includes('\n'), tag + 'Enter in question 10 makes a new line');
+  const note = () => page.evaluate(() => {
+    const n = document.getElementById('q-helped').nextElementSibling;
+    return n && n.classList.contains('char-left') ? n.textContent : null;
+  });
+  await page.fill('#q-helped', 'a'.repeat(200));
+  assert.equal(await note(), '20 characters left', tag + 'a nearly full field says how many characters are left');
+  await page.fill('#q-helped', 'a'.repeat(220));
+  assert.equal(await note(), 'No characters left', tag + 'a full field says so');
+  await page.fill('#q-helped', 'It explained other people\'s work.');
+  assert.equal(await note(), '', tag + 'no note while the field has room');
+  // the button still sends, exactly once
+  await page.click('#submit-btn');
+  await page.waitForSelector('#done', { state: 'visible', timeout: 5000 });
+  assert.equal(await page.evaluate(() => window.__sent.length), 1, tag + 'the button sends the questionnaire once');
+  await context.close();
+  console.log(`PASS questionnaire [${browserName}: Enter never sends; question 10 multi-line; characters left]`);
+}
+
 (async () => {
   for (const { name, engine } of BROWSERS) {
     const browser = await engine.launch({ headless: true });
@@ -343,6 +409,7 @@ async function runOverlongCheck(browser) {
       for (const vp of VIEWPORTS) {
         await runSingleCase(name, browser, vp);
       }
+      await runEnterAndLimitCheck(name, browser);
       if (name === 'chromium') {
         await runFailureRecoveryCheck(browser);
         await runOverlongCheck(browser);
