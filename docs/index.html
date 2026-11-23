@@ -1,0 +1,957 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="darkreader-lock">
+<title>Pre-workshop questionnaire · MPI-CBG · 25 November 2026</title>
+<style>
+  :root {
+    --ink: #1F2933;
+    --soft: #4B5563;
+    --accent: #8A3A1C;
+    --tint: #F6ECE4;
+    --warm: #9B1C2C;
+    --warm-bg: #FBE9EB;
+    --line: #D9DEE3;
+    --white: #FFFFFF;
+    --bg: #FAF8F6;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 "Avenir Next", Avenir, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  a {
+    color: var(--accent);
+  }
+
+  .wrap {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 28px 16px 56px;
+  }
+
+  header.hero {
+    background: var(--white);
+    border: 1.5px solid var(--line);
+    border-radius: 16px;
+    padding: 24px 24px 22px;
+    margin-bottom: 22px;
+  }
+
+  .accent-bar {
+    width: 44px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .kicker {
+    margin: 0 0 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: clamp(24px, 4vw, 32px);
+    line-height: 1.18;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .subtitle {
+    margin: 0;
+    color: var(--soft);
+    font-size: 16px;
+  }
+
+  .meta-tiles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .meta-tile {
+    background: var(--tint);
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+
+  .meta-tile b {
+    display: block;
+    font-size: 18px;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+
+  .meta-tile span {
+    font-size: 13.5px;
+    color: var(--soft);
+  }
+
+  form {
+    display: grid;
+    gap: 18px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    padding: 20px 22px;
+    min-width: 0;
+  }
+
+  .sec-head {
+    margin: 0 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .q-block {
+    margin: 0 0 20px;
+    min-width: 0;
+  }
+
+  .q-block:last-child {
+    margin-bottom: 0;
+  }
+
+  .q-label {
+    display: block;
+    font-weight: 600;
+    font-size: 15.5px;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+
+  .q-num {
+    color: var(--accent);
+    font-weight: 700;
+    margin-right: 4px;
+  }
+
+  .opt-tag {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 8px;
+    border-radius: 999px;
+    background: var(--tint);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    font: inherit;
+    font-size: 15.5px;
+    color: var(--ink);
+    background: var(--white);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 76px;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus {
+    border-color: var(--accent);
+    outline: 2px solid rgba(138, 58, 28, 0.2);
+    outline-offset: 1px;
+  }
+
+  input[type="text"]:disabled {
+    background: #F3F4F6;
+    color: var(--soft);
+  }
+
+  .inline-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    margin-top: 8px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: var(--tint);
+    font-size: 14.5px;
+    cursor: pointer;
+  }
+
+  .inline-check input {
+    width: 19px;
+    height: 19px;
+    margin: 0;
+    accent-color: var(--accent);
+    flex: none;
+  }
+
+  .choice-list {
+    display: grid;
+    gap: 8px;
+  }
+
+  .choice-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .choice-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    background: var(--white);
+    font-size: 14.5px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .choice-pills .choice-item {
+    flex: 1 1 140px;
+  }
+
+  .choice-item:hover {
+    border-color: var(--accent);
+  }
+
+  .choice-item input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--accent);
+    flex: none;
+  }
+
+  .choice-item:has(input:checked) {
+    border-color: var(--accent);
+    background: var(--tint);
+    font-weight: 600;
+  }
+
+  .matrix {
+    display: grid;
+    gap: 10px;
+  }
+
+  .matrix-row {
+    display: grid;
+    grid-template-columns: minmax(170px, 1.1fr) 2fr;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #FCFBFA;
+  }
+
+  .matrix-row-label {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .matrix-options-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .matrix-options-4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .pill-opt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 6px 8px;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    background: var(--white);
+    font-size: 13.5px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .pill-opt input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--accent);
+    flex: none;
+  }
+
+  .pill-opt:has(input:checked) {
+    border-color: var(--accent);
+    background: var(--tint);
+    font-weight: 600;
+  }
+
+  .other-tool-stack {
+    display: grid;
+    gap: 8px;
+  }
+
+  .scale-row {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .scale-ends {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12.5px;
+    color: var(--soft);
+    margin-top: 6px;
+  }
+
+  .other-concern-wrap {
+    margin-top: 8px;
+  }
+
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .msg {
+    display: none;
+    padding: 13px 16px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .msg.error {
+    background: var(--warm-bg);
+    color: var(--warm);
+    border-left: 5px solid var(--warm);
+  }
+
+  .submit-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    min-height: 48px;
+    padding: 12px 26px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--white);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .btn:hover:not(:disabled) {
+    background: #722F16;
+  }
+
+  .btn:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+
+  .done {
+    display: none;
+    background: var(--white);
+    border: 1.5px solid var(--line);
+    border-left: 6px solid var(--accent);
+    border-radius: 14px;
+    padding: 22px 24px;
+  }
+
+  .done b {
+    display: block;
+    font-size: 21px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  footer {
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 1.5px solid var(--line);
+    font-size: 13.5px;
+    color: var(--soft);
+  }
+
+  footer b {
+    color: var(--ink);
+  }
+
+  @media (max-width: 680px) {
+    .wrap {
+      padding: 16px 12px 44px;
+    }
+
+    header.hero,
+    .card {
+      padding: 16px 14px;
+    }
+
+    .meta-tiles {
+      grid-template-columns: 1fr;
+    }
+
+    .matrix-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .matrix-options-3 {
+      grid-template-columns: 1fr;
+    }
+
+    .matrix-options-4 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pill-opt {
+      justify-content: flex-start;
+      padding: 8px 10px;
+    }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="hero">
+    <div class="accent-bar"></div>
+    <p class="kicker">La Performative · MPI-CBG · 25 November 2026</p>
+    <h1>AI integration and workflows for mathematical research</h1>
+    <p class="subtitle">Short pre-workshop questionnaire for participants (about 3 minutes). Your answers help us pace Wednesday's hands-on sessions for everyone in the room.</p>
+    <div class="meta-tiles">
+      <div class="meta-tile">
+        <b>10:00–12:00 · 14:00–16:00</b>
+        <span>Wednesday 25 November 2026, MPI-CBG / CSBD, Dresden</span>
+      </div>
+      <div class="meta-tile">
+        <b>3 minutes</b>
+        <span>Setup check, current workflows, and what you want from the day</span>
+      </div>
+    </div>
+  </header>
+
+  <form id="questionnaire-form" novalidate>
+    <section class="card" aria-labelledby="sec-setup">
+      <h2 class="sec-head" id="sec-setup">1 · Who you are and setup check</h2>
+
+      <div class="q-block">
+        <label class="q-label" for="q-name"><span class="q-num">1.</span> Name and email</label>
+        <input type="text" id="q-name" name="name" autocomplete="name" maxlength="120" required placeholder="Your name">
+        <input type="email" id="q-email" name="email" autocomplete="email" maxlength="160" required placeholder="Your email" style="margin-top:8px">
+      </div>
+
+      <div class="q-block">
+        <label class="q-label" for="q-github"><span class="q-num">2.</span> GitHub username</label>
+        <input type="text" id="q-github" name="github_username" autocomplete="username" maxlength="80" placeholder="e.g. ada-lovelace">
+        <label class="inline-check">
+          <input type="checkbox" id="q-no-github" name="no_github_yet">
+          <span>I don't have one yet</span>
+        </label>
+      </div>
+
+      <div class="q-block">
+        <span class="q-label" id="lbl-gitlab"><span class="q-num">3.</span> Do you use GitLab?</span>
+        <div class="choice-pills" role="radiogroup" aria-labelledby="lbl-gitlab">
+          <label class="choice-item"><input type="radio" name="gitlab" value="yes, the institute's"><span>Yes, the institute's</span></label>
+          <label class="choice-item"><input type="radio" name="gitlab" value="yes, gitlab.com"><span>Yes, gitlab.com</span></label>
+          <label class="choice-item"><input type="radio" name="gitlab" value="no"><span>No</span></label>
+        </div>
+      </div>
+
+      <div class="q-block">
+        <span class="q-label"><span class="q-num">4.</span> Ready check for your laptop</span>
+        <div class="matrix">
+          <div class="matrix-row" role="radiogroup" aria-label="Ready check: Git">
+            <div class="matrix-row-label">Git</div>
+            <div class="matrix-options-3">
+              <label class="pill-opt"><input type="radio" name="ready_git" value="yes"><span>Yes</span></label>
+              <label class="pill-opt"><input type="radio" name="ready_git" value="not yet"><span>Not yet</span></label>
+              <label class="pill-opt"><input type="radio" name="ready_git" value="I'd like help"><span>I'd like help</span></label>
+            </div>
+          </div>
+
+          <div class="matrix-row" role="radiogroup" aria-label="Ready check: A local LaTeX editor">
+            <div class="matrix-row-label">A local LaTeX editor</div>
+            <div class="matrix-options-3">
+              <label class="pill-opt"><input type="radio" name="ready_latex" value="yes"><span>Yes</span></label>
+              <label class="pill-opt"><input type="radio" name="ready_latex" value="not yet"><span>Not yet</span></label>
+              <label class="pill-opt"><input type="radio" name="ready_latex" value="I'd like help"><span>I'd like help</span></label>
+            </div>
+          </div>
+
+          <div class="matrix-row" role="radiogroup" aria-label="Ready check: Claude Code installed">
+            <div class="matrix-row-label">Claude Code installed</div>
+            <div class="matrix-options-3">
+              <label class="pill-opt"><input type="radio" name="ready_claude_code" value="yes"><span>Yes</span></label>
+              <label class="pill-opt"><input type="radio" name="ready_claude_code" value="not yet"><span>Not yet</span></label>
+              <label class="pill-opt"><input type="radio" name="ready_claude_code" value="I'd like help"><span>I'd like help</span></label>
+            </div>
+          </div>
+
+          <div class="matrix-row" role="radiogroup" aria-label="Ready check: An Anthropic account that includes Claude Code">
+            <div class="matrix-row-label">An Anthropic account that includes Claude Code</div>
+            <div class="matrix-options-3">
+              <label class="pill-opt"><input type="radio" name="ready_anthropic_account" value="yes"><span>Yes</span></label>
+              <label class="pill-opt"><input type="radio" name="ready_anthropic_account" value="not yet"><span>Not yet</span></label>
+              <label class="pill-opt"><input type="radio" name="ready_anthropic_account" value="I'd like help"><span>I'd like help</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block">
+        <span class="q-label" id="lbl-plan"><span class="q-num">5.</span> Which Claude plan?</span>
+        <div class="choice-list" role="radiogroup" aria-labelledby="lbl-plan">
+          <label class="choice-item"><input type="radio" name="claude_plan" value="Pro"><span>Pro</span></label>
+          <label class="choice-item"><input type="radio" name="claude_plan" value="Max"><span>Max</span></label>
+          <label class="choice-item"><input type="radio" name="claude_plan" value="Team or Enterprise through the institute"><span>Team or Enterprise through the institute</span></label>
+          <label class="choice-item"><input type="radio" name="claude_plan" value="not sure"><span>Not sure</span></label>
+          <label class="choice-item"><input type="radio" name="claude_plan" value="none yet"><span>None yet</span></label>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="sec-tools">
+      <h2 class="sec-head" id="sec-tools">2 · Current tools and research habits</h2>
+
+      <div class="q-block">
+        <span class="q-label"><span class="q-num">6.</span> AI tools you use for research and how often</span>
+        <div class="matrix">
+          <div class="matrix-row" role="radiogroup" aria-label="Frequency: Claude (chat)">
+            <div class="matrix-row-label">Claude (chat)</div>
+            <div class="matrix-options-4">
+              <label class="pill-opt"><input type="radio" name="freq_row_1" value="never"><span>Never</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_1" value="sometimes"><span>Sometimes</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_1" value="weekly"><span>Weekly</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_1" value="daily"><span>Daily</span></label>
+            </div>
+          </div>
+
+          <div class="matrix-row" role="radiogroup" aria-label="Frequency: Claude Code">
+            <div class="matrix-row-label">Claude Code</div>
+            <div class="matrix-options-4">
+              <label class="pill-opt"><input type="radio" name="freq_row_2" value="never"><span>Never</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_2" value="sometimes"><span>Sometimes</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_2" value="weekly"><span>Weekly</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_2" value="daily"><span>Daily</span></label>
+            </div>
+          </div>
+
+          <div class="matrix-row" role="radiogroup" aria-label="Frequency: ChatGPT / Codex">
+            <div class="matrix-row-label">ChatGPT / Codex</div>
+            <div class="matrix-options-4">
+              <label class="pill-opt"><input type="radio" name="freq_row_3" value="never"><span>Never</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_3" value="sometimes"><span>Sometimes</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_3" value="weekly"><span>Weekly</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_3" value="daily"><span>Daily</span></label>
+            </div>
+          </div>
+
+          <div class="matrix-row" role="radiogroup" aria-label="Frequency: row 4">
+            <div class="matrix-row-label">Gemini</div>
+            <div class="matrix-options-4">
+              <label class="pill-opt"><input type="radio" name="freq_row_4" value="never"><span>Never</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_4" value="sometimes"><span>Sometimes</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_4" value="weekly"><span>Weekly</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_4" value="daily"><span>Daily</span></label>
+            </div>
+          </div>
+
+          <div class="matrix-row" role="radiogroup" aria-label="Frequency: GitHub Copilot">
+            <div class="matrix-row-label">GitHub Copilot</div>
+            <div class="matrix-options-4">
+              <label class="pill-opt"><input type="radio" name="freq_row_5" value="never"><span>Never</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_5" value="sometimes"><span>Sometimes</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_5" value="weekly"><span>Weekly</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_5" value="daily"><span>Daily</span></label>
+            </div>
+          </div>
+
+          <div class="matrix-row" role="radiogroup" aria-label="Frequency: Local models">
+            <div class="matrix-row-label">Local models</div>
+            <div class="matrix-options-4">
+              <label class="pill-opt"><input type="radio" name="freq_row_6" value="never"><span>Never</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_6" value="sometimes"><span>Sometimes</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_6" value="weekly"><span>Weekly</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_6" value="daily"><span>Daily</span></label>
+            </div>
+          </div>
+
+          <div class="matrix-row" role="radiogroup" aria-label="Frequency: Other tool">
+            <div class="other-tool-stack">
+              <label class="matrix-row-label" for="q-tool-other">Other <span class="opt-tag">optional</span></label>
+              <input type="text" id="q-tool-other" name="tool_other_name" maxlength="100" placeholder="Specify tool if any">
+            </div>
+            <div class="matrix-options-4">
+              <label class="pill-opt"><input type="radio" name="freq_row_7" value="never" checked><span>Never</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_7" value="sometimes"><span>Sometimes</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_7" value="weekly"><span>Weekly</span></label>
+              <label class="pill-opt"><input type="radio" name="freq_row_7" value="daily"><span>Daily</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-block">
+        <span class="q-label" id="lbl-where"><span class="q-num">7.</span> Where do you use AI most?</span>
+        <div class="choice-pills" role="radiogroup" aria-labelledby="lbl-where">
+          <label class="choice-item"><input type="radio" name="where_most" value="chat window"><span>Chat window</span></label>
+          <label class="choice-item"><input type="radio" name="where_most" value="agent in the terminal"><span>Agent in the terminal</span></label>
+          <label class="choice-item"><input type="radio" name="where_most" value="inside an editor"><span>Inside an editor</span></label>
+          <label class="choice-item"><input type="radio" name="where_most" value="not yet"><span>Not yet</span></label>
+        </div>
+      </div>
+
+      <div class="q-block">
+        <span class="q-label"><span class="q-num">8.</span> Have you ever (check all that apply)</span>
+        <div class="choice-list">
+          <label class="choice-item"><input type="checkbox" name="have_ever" value="let an agent edit files in a repository"><span>Let an agent edit files in a repository</span></label>
+          <label class="choice-item"><input type="checkbox" name="have_ever" value="run several agents in parallel or sub-agents"><span>Run several agents in parallel or sub-agents</span></label>
+          <label class="choice-item"><input type="checkbox" name="have_ever" value="written an instruction file for an agent (CLAUDE.md, AGENTS.md)"><span>Written an instruction file for an agent (CLAUDE.md, AGENTS.md)</span></label>
+          <label class="choice-item"><input type="checkbox" name="have_ever" value="used AI for literature search"><span>Used AI for literature search</span></label>
+          <label class="choice-item"><input type="checkbox" name="have_ever" value="used AI for computations or code"><span>Used AI for computations or code</span></label>
+          <label class="choice-item"><input type="checkbox" name="have_ever" value="used AI for proofs"><span>Used AI for proofs</span></label>
+          <label class="choice-item"><input type="checkbox" name="have_ever" value="used AI for writing"><span>Used AI for writing</span></label>
+          <label class="choice-item"><input type="checkbox" name="have_ever" value="had an agent suggest a research idea you kept"><span>Had an agent suggest a research idea you kept</span></label>
+        </div>
+      </div>
+
+      <div class="q-block">
+        <label class="q-label" for="q-wrong"><span class="q-num">9.</span> Has an AI ever given you a wrong mathematical result? How did you notice?</label>
+        <textarea id="q-wrong" name="wrong_result" rows="3" maxlength="800" required placeholder="A short note, or 'not yet' if you have not tried it on mathematics"></textarea>
+      </div>
+
+      <div class="q-block">
+        <label class="q-label" for="q-helped"><span class="q-num">10.</span> The last time AI really helped your research, what did it do?</label>
+        <input type="text" id="q-helped" name="last_helped" maxlength="400" required placeholder="One sentence (or 'none yet')">
+      </div>
+
+      <div class="q-block">
+        <span class="q-label" id="lbl-pr"><span class="q-num">11.</span> Pull or merge requests</span>
+        <div class="choice-pills" role="radiogroup" aria-labelledby="lbl-pr">
+          <label class="choice-item"><input type="radio" name="pull_requests" value="never used"><span>Never used</span></label>
+          <label class="choice-item"><input type="radio" name="pull_requests" value="used them"><span>Used them</span></label>
+          <label class="choice-item"><input type="radio" name="pull_requests" value="use them daily"><span>Use them daily</span></label>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="sec-views">
+      <h2 class="sec-head" id="sec-views">3 · Perspectives and expectations</h2>
+
+      <div class="q-block">
+        <span class="q-label" id="lbl-scale"><span class="q-num">12.</span> "AI will change how I do mathematics" <span class="opt-tag">optional</span></span>
+        <div class="scale-row" role="radiogroup" aria-labelledby="lbl-scale">
+          <label class="pill-opt"><input type="radio" name="change_scale" value="1"><span>1</span></label>
+          <label class="pill-opt"><input type="radio" name="change_scale" value="2"><span>2</span></label>
+          <label class="pill-opt"><input type="radio" name="change_scale" value="3"><span>3</span></label>
+          <label class="pill-opt"><input type="radio" name="change_scale" value="4"><span>4</span></label>
+          <label class="pill-opt"><input type="radio" name="change_scale" value="5"><span>5</span></label>
+        </div>
+        <div class="scale-ends">
+          <span>1 · Strongly disagree</span>
+          <span>5 · Strongly agree</span>
+        </div>
+      </div>
+
+      <div class="q-block">
+        <span class="q-label" id="lbl-concern"><span class="q-num">13.</span> Your main concern <span class="opt-tag">optional</span></span>
+        <div class="choice-list" role="radiogroup" aria-labelledby="lbl-concern">
+          <label class="choice-item"><input type="radio" name="main_concern" value="checking results"><span>Checking results</span></label>
+          <label class="choice-item"><input type="radio" name="main_concern" value="authorship and credit"><span>Authorship and credit</span></label>
+          <label class="choice-item"><input type="radio" name="main_concern" value="losing skills"><span>Losing skills</span></label>
+          <label class="choice-item"><input type="radio" name="main_concern" value="data and privacy"><span>Data and privacy</span></label>
+          <label class="choice-item"><input type="radio" name="main_concern" value="environmental cost"><span>Environmental cost</span></label>
+          <label class="choice-item"><input type="radio" name="main_concern" value="other"><span>Other</span></label>
+        </div>
+        <div class="other-concern-wrap">
+          <input type="text" id="q-concern-other" name="main_concern_other" maxlength="240" aria-label="Specify other concern (optional)" placeholder="If other, specify here (optional)">
+        </div>
+      </div>
+
+      <div class="q-block">
+        <label class="q-label" for="q-leave-with"><span class="q-num">14.</span> One thing you want to leave Wednesday with <span class="opt-tag">optional</span></label>
+        <textarea id="q-leave-with" name="leave_with" rows="2" maxlength="500" placeholder="Optional"></textarea>
+      </div>
+    </section>
+
+    <label class="hp-field" aria-hidden="true">Website<input name="site" tabindex="-1" autocomplete="off"></label>
+
+    <div class="msg" id="msg" role="alert"></div>
+
+    <div class="submit-row">
+      <button class="btn" id="submit-btn" type="submit">Send questionnaire</button>
+    </div>
+  </form>
+
+  <div class="done" id="done" role="status">
+    <b>Thank you, your answers have been recorded.</b>
+    We look forward to seeing you on Wednesday 25 November at 10:00 at the MPI-CBG.
+  </div>
+
+  <footer>
+    <b>La Performative · Dr. Erika Roldán Roa</b> · Workshop hosted by the research group of Dr. Daniela Egas Santander, MPI-CBG / CSBD, Dresden.
+  </footer>
+</main>
+
+<script>
+  const API = 'https://script.google.com/macros/s/AKfycbxR84v8EDB4bV5icuTFLuRPZn5g0fwYmQd9fm0vPKkOGERLzldZwkV0JTup3UxFX5g/exec';
+  const $ = id => document.getElementById(id);
+  const clientId = 'wq' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+  let failures = 0;
+
+  const noGithubBox = $('q-no-github');
+  const githubInput = $('q-github');
+
+  noGithubBox.addEventListener('change', () => {
+    githubInput.disabled = noGithubBox.checked;
+    if (noGithubBox.checked) {
+      githubInput.value = '';
+    }
+  });
+
+  function showError(text, focusEl) {
+    const m = $('msg');
+    m.textContent = text;
+    m.className = 'msg error';
+    m.style.display = 'block';
+    if (focusEl && typeof focusEl.focus === 'function') {
+      focusEl.focus();
+    }
+  }
+
+  function radioValue(form, groupName) {
+    const checked = form.querySelector('input[name="' + groupName + '"]:checked');
+    return checked ? checked.value : '';
+  }
+
+  function checkedValues(form, groupName) {
+    return Array.from(form.querySelectorAll('input[name="' + groupName + '"]:checked')).map(el => el.value);
+  }
+
+  $('questionnaire-form').addEventListener('input', () => {
+    $('msg').style.display = 'none';
+  });
+  $('questionnaire-form').addEventListener('change', () => {
+    $('msg').style.display = 'none';
+  });
+
+  $('questionnaire-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const f = e.target;
+
+    const personName = f.name.value.replace(/\s+/g, ' ').trim();
+    if (personName.length < 2) {
+      showError('Please enter your name before submitting.', $('q-name'));
+      return;
+    }
+
+    const personEmail = f.email.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(personEmail)) {
+      showError('Please enter a valid email address.', $('q-email'));
+      return;
+    }
+
+    const noGithub = noGithubBox.checked;
+    const rawGithub = githubInput.value.replace(/^@+/, '').trim();
+    if (!noGithub && !rawGithub) {
+      showError('Please enter your GitHub username, or check "I don\'t have one yet".', githubInput);
+      return;
+    }
+
+    const requiredRadios = [
+      ['gitlab', 'Question 3 (GitLab)'],
+      ['ready_git', 'Question 4 (Git)'],
+      ['ready_latex', 'Question 4 (local LaTeX editor)'],
+      ['ready_claude_code', 'Question 4 (Claude Code installed)'],
+      ['ready_anthropic_account', 'Question 4 (Anthropic account)'],
+      ['claude_plan', 'Question 5 (Claude plan)'],
+      ['freq_row_1', 'Question 6 (row 1)'],
+      ['freq_row_2', 'Question 6 (row 2)'],
+      ['freq_row_3', 'Question 6 (row 3)'],
+      ['freq_row_4', 'Question 6 (row 4)'],
+      ['freq_row_5', 'Question 6 (row 5)'],
+      ['freq_row_6', 'Question 6 (row 6)'],
+      ['where_most', 'Question 7 (where you use it most)'],
+      ['pull_requests', 'Question 11 (pull or merge requests)']
+    ];
+
+    for (const [group, label] of requiredRadios) {
+      if (!radioValue(f, group)) {
+        const firstInput = f.querySelector('input[name="' + group + '"]');
+        showError('Please select an answer for ' + label + '.', firstInput);
+        return;
+      }
+    }
+
+    const wrongResult = f.wrong_result.value.replace(/\s+/g, ' ').trim();
+    if (!wrongResult) {
+      showError('Please answer Question 9 before submitting.', $('q-wrong'));
+      return;
+    }
+
+    const lastHelped = f.last_helped.value.replace(/\s+/g, ' ').trim();
+    if (!lastHelped) {
+      showError('Please answer Question 10 before submitting.', $('q-helped'));
+      return;
+    }
+
+    const rowLabels = {};
+    for (let i = 1; i <= 6; i++) {
+      const firstRadio = f.querySelector('input[name="freq_row_' + i + '"]');
+      const rowEl = firstRadio.closest('.matrix-row');
+      const title = rowEl.querySelector('.matrix-row-label').textContent.trim();
+      rowLabels[title] = radioValue(f, 'freq_row_' + i);
+    }
+    const otherToolName = f.tool_other_name.value.replace(/\s+/g, ' ').trim();
+    rowLabels.other = {
+      name: otherToolName,
+      frequency: radioValue(f, 'freq_row_7') || 'never'
+    };
+
+    const githubTag = noGithub ? 'no-github-yet' : rawGithub;
+    const answers = {
+      name: personName,
+      email: personEmail,
+      github_username: noGithub ? null : rawGithub,
+      no_github_yet: noGithub,
+      gitlab: radioValue(f, 'gitlab'),
+      ready_check: {
+        git: radioValue(f, 'ready_git'),
+        local_latex_editor: radioValue(f, 'ready_latex'),
+        claude_code_installed: radioValue(f, 'ready_claude_code'),
+        anthropic_account_with_claude_code: radioValue(f, 'ready_anthropic_account')
+      },
+      claude_plan: radioValue(f, 'claude_plan'),
+      research_tools_frequency: rowLabels,
+      where_used_most: radioValue(f, 'where_most'),
+      have_you_ever: checkedValues(f, 'have_ever'),
+      wrong_math_result: wrongResult,
+      last_time_helped: lastHelped,
+      pull_or_merge_requests: radioValue(f, 'pull_requests'),
+      change_how_i_do_mathematics_1_to_5: radioValue(f, 'change_scale') || null,
+      main_concern: radioValue(f, 'main_concern') || null,
+      main_concern_other: f.main_concern_other.value.replace(/\s+/g, ' ').trim() || null,
+      leave_wednesday_with: f.leave_with.value.replace(/\s+/g, ' ').trim() || null
+    };
+
+    const btn = $('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    $('msg').style.display = 'none';
+
+    let ac = null;
+    let timer = null;
+    try {
+      ac = new AbortController();
+      timer = setTimeout(() => ac.abort(), 60000);
+    } catch (err) {
+      ac = null;
+    }
+
+    try {
+      const r = await fetch(API, {
+        method: 'POST',
+        headers: {'Content-Type': 'text/plain;charset=utf-8'},
+        redirect: 'follow',
+        signal: ac ? ac.signal : undefined,
+        body: JSON.stringify({
+          action: 'submitCorrection',
+          url: '/ai-math-workshop-questionnaire/',
+          lang: 'en',
+          issue_type: 'other',
+          issue_text: 'Questionnaire · ' + githubTag,
+          suggested_fix: JSON.stringify({n: 1, mot: 'GitHub: ' + githubTag, answers: answers}),
+          reporter_name: personName,
+          reporter_email: '',
+          hp: f.site.value || '',
+          origin: location.origin,
+          client_id: clientId
+        })
+      });
+      const d = await r.json();
+      if (timer) clearTimeout(timer);
+      if (d && d.status === 'ok' && d.correction_id) {
+        f.style.display = 'none';
+        $('msg').style.display = 'none';
+        $('done').style.display = 'block';
+        $('done').scrollIntoView({behavior: 'smooth', block: 'center'});
+        return;
+      }
+      failures++;
+      showError(
+        failures >= 2
+          ? 'The server could not record your answers right now. Please try again later or email the organisers.'
+          : 'The server is busy right now. Please wait a moment and try again.'
+      );
+    } catch (err) {
+      if (timer) clearTimeout(timer);
+      showError('Connection failed while sending your answers. Please check your network and try again.');
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Send questionnaire';
+  });
+</script>
+</body>
+</html>
