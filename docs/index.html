@@ -643,7 +643,7 @@
           <div class="matrix-row" role="radiogroup" aria-label="Frequency: Other tool">
             <div class="other-tool-stack">
               <label class="matrix-row-label" for="q-tool-other">Other <span class="opt-tag">optional</span></label>
-              <input type="text" id="q-tool-other" name="tool_other_name" maxlength="100" placeholder="Specify tool if any">
+              <input type="text" id="q-tool-other" name="tool_other_name" maxlength="60" placeholder="Specify tool if any">
             </div>
             <div class="matrix-options-4">
               <label class="pill-opt"><input type="radio" name="freq_row_7" value="never" checked><span>Never</span></label>
@@ -681,12 +681,12 @@
 
       <div class="q-block">
         <label class="q-label" for="q-wrong"><span class="q-num">9.</span> Has an AI ever given you a wrong mathematical result? How did you notice?</label>
-        <textarea id="q-wrong" name="wrong_result" rows="3" maxlength="800" required placeholder="A short note, or 'not yet' if you have not tried it on mathematics"></textarea>
+        <textarea id="q-wrong" name="wrong_result" rows="3" maxlength="320" required placeholder="A short note, or 'not yet' if you have not tried it on mathematics"></textarea>
       </div>
 
       <div class="q-block">
         <label class="q-label" for="q-helped"><span class="q-num">10.</span> The last time AI really helped your research, what did it do?</label>
-        <input type="text" id="q-helped" name="last_helped" maxlength="400" required placeholder="One sentence (or 'none yet')">
+        <input type="text" id="q-helped" name="last_helped" maxlength="220" required placeholder="One sentence (or 'none yet')">
       </div>
 
       <div class="q-block">
@@ -728,13 +728,13 @@
           <label class="choice-item"><input type="radio" name="main_concern" value="other"><span>Other</span></label>
         </div>
         <div class="other-concern-wrap">
-          <input type="text" id="q-concern-other" name="main_concern_other" maxlength="240" aria-label="Specify other concern (optional)" placeholder="If other, specify here (optional)">
+          <input type="text" id="q-concern-other" name="main_concern_other" maxlength="120" aria-label="Specify other concern (optional)" placeholder="If other, specify here (optional)">
         </div>
       </div>
 
       <div class="q-block">
         <label class="q-label" for="q-leave-with"><span class="q-num">14.</span> One thing you want to leave Wednesday with <span class="opt-tag">optional</span></label>
-        <textarea id="q-leave-with" name="leave_with" rows="2" maxlength="500" placeholder="Optional"></textarea>
+        <textarea id="q-leave-with" name="leave_with" rows="2" maxlength="220" placeholder="Optional"></textarea>
       </div>
     </section>
 
@@ -913,6 +913,36 @@
     }
 
     try {
+      // The intake keeps at most 1000 characters of issue_text and of suggested_fix, and stores reporter_email whole:
+      // the choices go compactly in suggested_fix (format v2), the free texts in issue_text, the email in reporter_email.
+      const FREQ = {never: '0', sometimes: '1', weekly: '2', daily: '3'};
+      const TF_KEYS = ['Claude (chat)', 'Claude Code', 'ChatGPT / Codex', 'Gemini', 'GitHub Copilot', 'Local models'];
+      const HE = Array.from(f.querySelectorAll('input[name="have_ever"]')).map(x => x.value);
+      const tfq = answers.research_tools_frequency;
+      const compact = {
+        gl: answers.gitlab || '',
+        rc: [answers.ready_check.git, answers.ready_check.local_latex_editor, answers.ready_check.claude_code_installed,
+             answers.ready_check.anthropic_account_with_claude_code],
+        pl: answers.claude_plan || '',
+        tf: TF_KEYS.map(k => FREQ[tfq[k]] || '0').join('') + (FREQ[tfq.other.frequency] || '0'),
+        to: (tfq.other.name || '').slice(0, 60),
+        wm: answers.where_used_most || '',
+        he: answers.have_you_ever.map(v => HE.indexOf(v)).filter(i => i >= 0).join(''),
+        pr: answers.pull_or_merge_requests || '',
+        cs: answers.change_how_i_do_mathematics_1_to_5 || '',
+        mc: answers.main_concern || '',
+        mo: (answers.main_concern_other || '').slice(0, 120)
+      };
+      const fixText = JSON.stringify({n: 1, mot: 'GitHub: ' + githubTag, v: 2, gh: answers.github_username || '',
+                                      ng: answers.no_github_yet ? 1 : 0, s: compact});
+      const free = {w: answers.wrong_math_result || '', h: answers.last_time_helped || '', l: answers.leave_wednesday_with || ''};
+      const head = 'Questionnaire · ' + githubTag + '\n';
+      let issueText = head + JSON.stringify(free);
+      while (issueText.length > 990) {
+        const k = ['w', 'h', 'l'].reduce((a, b) => (free[a].length >= free[b].length ? a : b));
+        free[k] = free[k].slice(0, Math.max(0, free[k].length - 20));
+        issueText = head + JSON.stringify(free);
+      }
       const r = await fetch(API, {
         method: 'POST',
         headers: {'Content-Type': 'text/plain;charset=utf-8'},
@@ -923,10 +953,10 @@
           url: '/ai-math-workshop-questionnaire/',
           lang: 'en',
           issue_type: 'other',
-          issue_text: 'Questionnaire · ' + githubTag,
-          suggested_fix: JSON.stringify({n: 1, mot: 'GitHub: ' + githubTag, answers: answers}),
+          issue_text: issueText,
+          suggested_fix: fixText,
           reporter_name: personName,
-          reporter_email: '',
+          reporter_email: answers.email,
           hp: f.site.value || '',
           origin: location.origin,
           client_id: clientId
