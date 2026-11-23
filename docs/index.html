@@ -169,6 +169,7 @@
   }
 
   input[type="text"],
+  input[type="email"],
   textarea {
     width: 100%;
     min-width: 0;
@@ -188,13 +189,15 @@
   }
 
   input[type="text"]:focus,
+  input[type="email"]:focus,
   textarea:focus {
     border-color: var(--accent);
     outline: 2px solid rgba(138, 58, 28, 0.2);
     outline-offset: 1px;
   }
 
-  input[type="text"]:disabled {
+  input[type="text"]:disabled,
+  input[type="email"]:disabled {
     background: #F3F4F6;
     color: var(--soft);
   }
